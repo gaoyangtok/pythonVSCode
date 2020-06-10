@@ -6,7 +6,8 @@
 import { shims } from '@jupyter-widgets/base';
 import * as jupyterlab from '@jupyter-widgets/jupyterlab-manager';
 import { RenderMimeRegistry, standardRendererFactories } from '@jupyterlab/rendermime';
-import { Kernel } from '@jupyterlab/services';
+import { Kernel, KernelMessage } from '@jupyterlab/services';
+import { ISignal } from '@phosphor/signaling';
 import { Widget } from '@phosphor/widgets';
 import { DocumentContext } from './documentContext';
 import { requireLoader } from './widgetLoader';
@@ -95,7 +96,7 @@ export class WidgetManager extends jupyterlab.WidgetManager {
         // This throws errors if enabled, can be added later.
     }
 
-    public get onUnhandledIOPubMessage() {
+    public get onUnhandledIOPubMessage(): ISignal<this, KernelMessage.IIOPubMessage> {
         return super.onUnhandledIOPubMessage;
     }
 
