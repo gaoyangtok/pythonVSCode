@@ -1522,6 +1522,8 @@ export type NotebookCellChangedEvent =
     | NotebookCellLanguageChangeEvent;
 export const IVSCodeNotebook = Symbol('IVSCodeNotebook');
 export interface IVSCodeNotebook {
+    readonly activeNotebookKernel: NotebookKernel | undefined;
+    readonly onDidChangeActiveNotebookKernel: Event<void>;
     readonly notebookDocuments: ReadonlyArray<NotebookDocument>;
     readonly onDidOpenNotebookDocument: Event<NotebookDocument>;
     readonly onDidCloseNotebookDocument: Event<NotebookDocument>;

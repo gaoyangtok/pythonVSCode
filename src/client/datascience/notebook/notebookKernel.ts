@@ -6,20 +6,23 @@
 import { inject, injectable } from 'inversify';
 import { CancellationToken, Uri } from 'vscode';
 import type { NotebookCell, NotebookDocument, NotebookKernel as VSCNotebookKernel } from 'vscode-proposed';
+import { KernelSelection } from '../jupyter/kernels/types';
 import { INotebookExecutionService } from './types';
 
 /**
  * VSC will use this class to execute cells in a notebook.
  * This is where we hookup Jupyter with a Notebook in VSCode.
  */
-@injectable()
 export class NotebookKernel implements VSCNotebookKernel {
     private _preloads: Uri[] = [];
 
     get preloads(): Uri[] {
         return this._preloads;
     }
-    constructor(@inject(INotebookExecutionService) private readonly execution: INotebookExecutionService) {}
+    constructor(
+        private readonly kernelInfo: KernelSelection,
+        @inject(INotebookExecutionService) private readonly execution: INotebookExecutionService,
+    ) {}
     public get label(): string {
         return 'Jupyter';
     }
